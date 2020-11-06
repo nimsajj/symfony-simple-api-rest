@@ -71,13 +71,13 @@ Update the .env.local file with lexit configuration and enter your passphrase
 
 ## Authenticate with postman
 
-**Note: Import the postman collection into postman folder**
+**Note: Import the collection from the postman software located in the postman folder**
 
 Create POST request on endpoint 127.0.0.1:8000/api/login
 
 ```json
 {
-  "username": "my-email",
+  "email": "my-email",
   "password": "my-password"
 }
 ```
