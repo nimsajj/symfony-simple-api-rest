@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Customer;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\EntityManagerInterface;
 
 /**
  * @method Customer|null find($id, $lockMode = null, $lockVersion = null)
@@ -14,37 +15,27 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class CustomerRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
-    {
+    private $manager;
+
+    public function __construct(
+        ManagerRegistry $registry,
+        EntityManagerInterface $manager
+    ) {
         parent::__construct($registry, Customer::class);
+        $this->manager = $manager;
     }
 
-    // /**
-    //  * @return Customer[] Returns an array of Customer objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function saveCustomer(Customer $customer): Customer
     {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+        $this->manager->persist($customer);
+        $this->manager->flush();
 
-    /*
-    public function findOneBySomeField($value): ?Customer
-    {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        return $customer;
     }
-    */
+
+    public function removeCustomer(Customer $customer): void
+    {
+        $this->manager->remove($customer);
+        $this->manager->flush();
+    }
 }
