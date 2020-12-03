@@ -1,4 +1,4 @@
-# Simple Api Rest using Symfony 5
+# Simple Api Rest using Symfony 5 and secured with LexikJWTAuthenticationBundle
 
 ## Install dependencies
 
